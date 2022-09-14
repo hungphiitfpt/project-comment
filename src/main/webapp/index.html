@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>ProductList</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+	
+</script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+	<div class="header-container pt-4 pl-5">
+		<h1 class="title-product-list">Thông tin đặt hàng</h1>
+	</div>
+
+	<div class="header-container pt-4 pl-5 mr-4">
+		<p class="title-info-people-buy-cart">Thông tin người đặt hàng</p>
+	</div>
+
+	<div class="box-info-people-buy-cart">
+
+		<div>
+			<label for="" class=" col-lg-3  name-people">Người đặt hàng</label> <input
+				type="text" class="col-lg-8 input-name-people" />
+		</div>
+
+		<div>
+			<label for="" class=" col-lg-3  address-delivery">Địa chỉ giao hàng</label> <input
+				type="text" class="col-lg-8 input-name-people" />
+		</div>
+
+		<div>
+			<label for="" class=" col-lg-3 daily-delivery">Ngày Giao Hàng</label> <input
+				type="text" class="col-lg-8 input-name-people" />
+		</div>
+
+
+	</div>
+
+	<div class="header-container pt-4 pl-5 mr-4">
+		<p class="title-info-people-buy-cart">Danh sách sản phẩm</p>
+	</div>
+
+
+
+
+	<div class="panigation-product-list">
+
+		<div class="row">
+
+			<div class="left-panigation-product-list control-panigation">
+
+				<button class="first-product"><<</button>
+				<button class="previous-product"><</button>
+				<p class="text-panigation-previous">Previous</p>
+
+			</div>
+			<div class="right-panigation-product-list control-panigation">
+
+				<p class="text-panigation-next">Next</p>
+				<button class="next-product">></button>
+				<button class="last-product">>></button>
+
+			</div>
+		</div>
+
+	</div>
+
+	<div class="table-view-product-list">
+		<div class="row">
+			<table class="table">
+				<thead class="thead-product-list">
+					<tr>
+						<th class="" style="width: 3%">No</th>
+						<th class="" style="width: 7%">Hình Ảnh</th>
+						<th class="" style="width: 20%">Tên Sản Phẩm</th>
+						<th class="" style="width: 30%">Loại Sản Phẩm</th>
+						<th class="" style="width: 37%">Mô tả</th>
+						<th class="text-center" style="width: 3%">Số Lượng</th>
+					</tr>
+				</thead>
+				<tbody class="body-table-product-list">
+
+					<tr th:each="p,i : ${listProduct}">
+						<td th:utext="${i.index}">1</td>
+						<td><img th:src="${p.productImg}" class="image-product-item"
+							src="data:image/jpeg;base64,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"
+							alt=""></td>
+						<td>
+							<div class="row flex-column">
+								<div class="code-product-item" th:utext="${p.productId}">0001232</div>
+								<div class="row">
+									<div class="name-product-item ml-3" th:utext="${p.productName}">Tủ
+										Lạnh</div>
+									&nbsp; SL:<label class="product-amount ml-3" for=""
+										th:utext="${p.productAmount}">0</label>
+								</div>
+							</div>
+						</td>
+						<td th:utext="${p.productType.productTypeName}">Tủ Lạnh</td>
+						<td class="">
+							<div class="row flex-column">
+								<div class="code-product-item">Model:</div>
+								<div class="row">
+									<p class="ml-3 description-product-item"
+										th:utext="${p.productDescription}">Công suất lớn và những
+										cải tiến vượt bậc giữ cho thực phẩm tươi ngon hơn! Dự trữ thực
+										phẩm cần thiết và sắp xếp một cách dễ dàng. Kiểm tra ngay! lớp
+										năng lượng cao hơn・FRESHBalancer™・lưu thông lạnh tốt
+										hơn・LINEAR Cooling™・Smart ThinQ™.</p>
+								</div>
+							</div>
+						</td>
+						<td class="column-quantity"><input
+							onblur="validateQuantity($(this))" class="quantity-product-item"
+							type="text"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="order-product">
+		<button class="btn-order btn-click" type="submit">Đặt hàng</button>
+		<button class="btn-cancel btn-click" type="submit">Cancel</button>
+	</div>
+
+	<div class="copy-right">
+		<p>Copyright (c) 2000-2020 FUJINET System, All Rights Reserved.</p>
+	</div>
+	<script src="../js/productList.js">
+		
+	</script>
+</body>
+</html>
